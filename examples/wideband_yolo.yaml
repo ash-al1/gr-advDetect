@@ -1,0 +1,57 @@
+train: /workspace/datasets/impaired/images/train/
+val: /workspace/datasets/impaired/images/val/
+nc: 51
+
+# Classes for single_cls=True only first class matters
+names:
+  0: bpsk
+  1: qpsk
+  2: 8psk
+  3: 16qam
+  4: 16psk
+  5: 32qam
+  6: 32qam_cross
+  7: 32psk
+  8: 64qam
+  9: 64psk
+  10: 128qam_cross
+  11: 256qam
+  12: 512qam_cross
+  13: 1024qam
+  14: 2fsk
+  15: 2gfsk
+  16: 2msk
+  17: 2gmsk
+  18: 4fsk
+  19: 4gfsk
+  20: 4msk
+  21: 4gmsk
+  22: 8fsk
+  23: 8gfsk
+  24: 8msk
+  25: 8gmsk
+  26: 16fsk
+  27: 16gfsk
+  28: 16msk
+  29: 16gmsk
+  30: ofdm-64
+  31: ofdm-72
+  32: ofdm-128
+  33: ofdm-180
+  34: ofdm-256
+  35: ofdm-300
+  36: ofdm-512
+  37: ofdm-600
+  38: ofdm-900
+  39: ofdm-1024
+  40: ofdm-1200
+  41: ofdm-2048
+  42: fm
+  43: am-dsb-sc
+  44: am-dsb
+  45: am-lsb
+  46: am-usb
+  47: lfm_data
+  48: lfm_radar
+  49: chirpss 
+  50: tone
