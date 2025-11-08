@@ -149,21 +149,21 @@ class spectrumPlot(gr.sync_block, QWidget):
         #    f"Duration: {duration}(ns), Start Time (ns): {detect_boxes['startTime']} "
         #    f"End Time (ns): {detect_boxes['endTime']}"
         #)
-        self.ax.set_ylabel(
-            f"Bandwidth: {plotFreqBW}(MHz), Center Frequency: {cfreqMHz}(MHz)"
-        )
+        #self.ax.set_ylabel(
+        #    f"Bandwidth: {plotFreqBW}(MHz), Center Frequency: {cfreqMHz}(MHz)"
+        #)
 
         # Set tick labels for time and frequency
-        mid_time = np.uint64(detect_boxes['startTime']) + np.uint64(detect_boxes['durationTime'] / 2)
-        self.ax.set_xticks(
-            [0, (nfft / 2) - 1, nfft - 1],
-            [detect_boxes['startTime'], mid_time, detect_boxes['endTime']]
-        )
+        #mid_time = np.uint64(detect_boxes['startTime']) + np.uint64(detect_boxes['durationTime'] / 2)
+        #self.ax.set_xticks(
+        #    [0, (nfft / 2) - 1, nfft - 1],
+        #    [detect_boxes['startTime'], mid_time, detect_boxes['endTime']]
+        #)
         
-        self.ax.set_yticks(
-            [0, (nfft / 2) - 1, nfft - 1],
-            [cfreqMHz + plotFreqBW / 2.0, cfreqMHz, cfreqMHz - plotFreqBW / 2.0]
-        )
+        #self.ax.set_yticks(
+        #    [0, (nfft / 2) - 1, nfft - 1],
+        #    [cfreqMHz + plotFreqBW / 2.0, cfreqMHz, cfreqMHz - plotFreqBW / 2.0]
+        #)
 
         # Save to disk
         if self.save:

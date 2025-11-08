@@ -254,7 +254,7 @@ class specDetect(gr.sync_block):
 
                 # Run wideband detector
                 result = self.wb_model(new_img_new, imgsz=self.nfft, iou=self.iou,
-                                       conf=self.conf, half=True)
+                                       conf=self.conf, half=True, verbose=False)
                 plot_img = result[0].orig_img               
                 detect_count = len(result[0].boxes.xyxy)
 
