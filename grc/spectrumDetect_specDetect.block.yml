@@ -5,7 +5,7 @@ category: '[spectrumDetect]'
 
 templates:
   imports: from gnuradio import spectrumDetect
-  make: spectrumDetect.specDetect(${center_frequency},${sample_rate},${vector_size}, ${n_fft},${trained_wideband_model}, ${trained_narrowband_model}, ${yolo_augment}, ${yolo_iou}, ${yolo_conf}, ${yolo_agnostic_nms}, ${yolo_max_det}, ${write_labeled_wb_images}, ${write_wb_images}, ${write_wb_iq_file}, ${write_nb_iq_file}, ${gpu_device}, ${gpu_half}, ${detect_json}, ${wb_detect_only})
+  make: spectrumDetect.specDetect(${center_frequency},${sample_rate},${vector_size}, ${n_fft},${trained_wideband_model}, ${yolo_iou}, ${yolo_conf}, ${write_labeled_wb_images}, ${write_wb_images}, ${write_wb_iq_file}, ${detect_json})
 
 parameters:
 - id: center_frequency
@@ -33,16 +33,6 @@ parameters:
   dtype: string
   default: '11s.pt'
   
-- id: trained_narrowband_model
-  label: trainedNarrowbandModel
-  dtype: string
-  default: 'xcit.ckpt'
-  
-- id: yolo_augment
-  label: augment
-  dtype: bool
-  default: False  
- 
 - id: yolo_iou
   label: iou
   dtype: float
@@ -52,16 +42,6 @@ parameters:
   label: conf
   dtype: float
   default: 0.25   
-  
-- id: yolo_agnostic_nms
-  label: agnosticNms
-  dtype: bool
-  default: False
-  
-- id: yolo_max_det
-  label: maxDet
-  dtype: int
-  default: 300  
   
 - id: write_labeled_wb_images
   label: writeLabeledWBImages
@@ -78,31 +58,11 @@ parameters:
   dtype: bool
   default: False 
 
-- id: write_nb_iq_file
-  label: writeNBIQFile
-  dtype: bool
-  default: False 
-  
-- id: gpu_device
-  label: gpuDevice
-  dtype: string
-  default: '0' 
-  
-- id: gpu_half
-  label: gpuHalf
-  dtype: bool
-  default: False 
-  
 - id: detect_json
   label: detectJson
   dtype: bool
   default: False 
   
-- id: wb_detect_only
-  label: wbDetectOnly
-  dtype: bool
-  default: True          
-
 inputs:
 - label: vector
   dtype: complex
