@@ -12,6 +12,7 @@
 # + Adds documentation for classes & functions
 # + Adds comments throughout code
 # + Simpler if statements in some places
+# + Count number of detections with detect_count instead of z+1
 
 import numpy as np
 import torchsig
@@ -69,8 +70,8 @@ class specDetect(gr.sync_block):
         self.wb_model = YOLO(self.wb_model_path)
 
         # GPU
-        torch.set_default_device('cuda')
-        self.wb_model.to('cuda')
+        torch.set_default_device(self.gpuDevice)
+        self.wb_model.to(self.gpuDevice)
 
         # PMT output
         self.portName1 = "detect_pmt"
@@ -183,7 +184,7 @@ class specDetect(gr.sync_block):
             current_time = np.uint64(time.time()*1e9)
 
         # Wait until timing is initialized
-        if ((self.use_PPS_time == True and self.d_rxTime.isInitialized()) or (self.use_PPS_time == False)):
+        if (not self.use_PPS_time or self.d_rxTime.isInitialized()):
             for inIdx in range(num_input_items):
                 fcM = self.fc/1e6
                 fsM = self.fs/1e6 
@@ -255,6 +256,7 @@ class specDetect(gr.sync_block):
                 result = self.wb_model(new_img_new, imgsz=self.nfft, iou=self.iou,
                                        conf=self.conf, half=True)
                 plot_img = result[0].orig_img               
+                detect_count = len(result[0].boxes.xyxy)
 
                 # Write [labeled] image to disk 
                 if self.writeWBImages:
@@ -355,7 +357,7 @@ class specDetect(gr.sync_block):
                 # Write JSON detection
                 if self.detectJson:                
                     boxes_pmt_dict['detects'] = boxes_pmt_sum_dict
-                    boxes_pmt_dict['detect_count'] = int(z+1)
+                    boxes_pmt_dict['detect_count'] = int(detect_count)
                     boxes_pmt_dict['detect'] = detect
                     detect_boxes_dict['boxes_pmt'] = boxes_pmt_dict  
                     detect_boxes_dict['fcM'] = float(fcM) 
@@ -373,7 +375,6 @@ class specDetect(gr.sync_block):
                         json.dump(detect_boxes_dict, outfile)                   
 
                 # Finalize PMT message
-                detect_count = len(result[0].boxes.xyxy)
                 boxes_pmt = pmt.dict_add(boxes_pmt, pmt.intern('detect_count'), pmt.from_long(detect_count))
                 boxes_pmt = pmt.dict_add(boxes_pmt, pmt.intern('detect'),pmt.from_bool(detect))  
                 detect_boxes = pmt.dict_add(detect_boxes, pmt.intern('boxes_pmt'),boxes_pmt)
